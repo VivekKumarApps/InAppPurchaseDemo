@@ -10,7 +10,7 @@ Steps:-
 
 * Open the google play developer console and move to in-app product options and create the inapp product id(for inapp product or subscription).
 
-* Put these ids in the SkuIds.java(appstudioz.android.inappbiling3) or you can test the inapp product by placing the id like "android.test.purchased".
+* Put these ids in the SkuIds.java or you can test the inapp product by placing the id like "android.test.purchased".
 
 * For Purchasing any product on any view click put the following code in onClick() method (like MainActivity.java) :-
     
