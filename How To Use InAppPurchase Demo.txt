@@ -5,7 +5,7 @@ Hello:-
 Steps:-
 1. Put your google play key (Base 64 InApp key) in the VKInAppProperties.java (app.vivek.inapppurchaselib.v3).
 2. Open the google play developer console and move to in-app product options and create the inapp product id(for inapp product or subscription).
-3. Put these ids in the SkuIds.java(appstudioz.android.inappbiling3) or you can test the inapp product by placing the id like "android.test.purchased".
+3. Put these ids in the SkuIds.java or you can test the inapp product by placing the id like "android.test.purchased".
 4. For Purchasing any product on any view click put the following code in onClick() method (like MainActivity.java) :-
     
 	Intent mIntent=new Intent(MainActivity.this, InAppPurchaseActivity.class);  //InAppPurchaseActivity.class handle all the callback releated to the in-app purchase.
