@@ -19,10 +19,10 @@ Steps:-
 #!java
 
 Intent mIntent=new Intent(MainActivity.this, InAppPurchaseActivity.class);  //InAppPurchaseActivity.class handle all the callback releated to the in-app purchase.
-	mIntent.putExtra(InAppConstants.INAPP_SKU_ID, SkuIds.SKU_INAPP_5);          //Pass your SkuId(Product Id)
-    mIntent.putExtra(InAppConstants.INAPP_SKU_TYPE,IabHelper.ITEM_TYPE_INAPP);  //Pass the SkuType(Product type :- inapp or subs)
+mIntent.putExtra(InAppConstants.INAPP_SKU_ID, SkuIds.SKU_INAPP_5);          //Pass your SkuId(Product Id)
+mIntent.putExtra(InAppConstants.INAPP_SKU_TYPE,IabHelper.ITEM_TYPE_INAPP);  //Pass the SkuType(Product type :- inapp or subs)
 mIntent.putExtra(InAppConstants.INAPP_PRODUCT_TYPE,VKInAppConstants.INAPP_CONSUMABLE);  // Constant for inapp product type like(Consumable or not) if value = INAPP_CONSUMABLE than Consumable else Non Consumable product
-	startActivityForResult(mIntent, 101); 	// Open the activity for result
+startActivityForResult(mIntent, 101); 	// Open the activity for result
 ```
 Implement the onActivityResult() method, where you will be get all callback related to status of InApp purchase.
 	
