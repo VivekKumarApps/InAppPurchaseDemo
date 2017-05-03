@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">InAppPurchaseLib</string>
+
+    <string name="error_msg_package_name">Your application package name can not start with com.example</string>
+    <string name="error_msg_base64key">Please setup your app Base 64 KEY for InApp Purchase.</string>
+    <string name="error_msg_not_support_inapp">Your devices does not support inapp purchase.</string>
+    <string name="error_msg_not_support_subs">Your devices does not support subscription.</string>
+    <string name="error_msg_in_purchase">Error is occured in purchasing.</string>
+    <string name="title_activity_asin_app_v3_actvity">ASInAppV3Actvity</string>
+</resources>

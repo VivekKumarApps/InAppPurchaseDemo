@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">InAppPurchase</string>
+
+
+    <string name="title_activity_main">InAppDemo</string>
+    <string name="tv_header_text">InAppPurchase Sample App</string>
+    <string name="tv_header_test_product_text">On Test Product</string>
+    <string name="tv_header_real_product_text">On Real Product</string>
+    <string name="tv_consumable">CONSUMABLE</string>
+    <string name="tv_non_consumable">NON-CONSUMABLE</string>
+    <string name="tv_subscription">SUBSCRIPTION</string>
+
+</resources>

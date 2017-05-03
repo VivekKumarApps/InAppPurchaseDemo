@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+    package="app.vivek.inapppurchaselib">
+
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
+    <application android:allowBackup="true" android:label="@string/app_name"
+        android:supportsRtl="true">
+        <activity
+            android:name=".v3.VKInAppPurchaseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent" />
+
+    </application>
+
+</manifest>
