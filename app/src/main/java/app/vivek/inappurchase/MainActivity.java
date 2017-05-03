@@ -3,15 +3,14 @@ package app.vivek.inappurchase;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import app.vivek.inapppurchaselib.utils.IabHelper;
-import app.vivek.inapppurchaselib.v3.ASSkuIds;
 import app.vivek.inapppurchaselib.v3.VKInAppConstants;
 import app.vivek.inapppurchaselib.v3.VKInAppPurchaseActivity;
+import app.vivek.inapppurchaselib.v3.VKLogger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent mIntent=new Intent(MainActivity.this, VKInAppPurchaseActivity.class);
-            mIntent.putExtra(VKInAppConstants.INAPP_SKU_ID, ASSkuIds.SKU_INAPP_5);
+            mIntent.putExtra(VKInAppConstants.INAPP_SKU_ID, SkuIds.SKU_INAPP_5);
             mIntent.putExtra(VKInAppConstants.INAPP_SKU_TYPE, IabHelper.ITEM_TYPE_INAPP);
             mIntent.putExtra(VKInAppConstants.INAPP_PRODUCT_TYPE,VKInAppConstants.INAPP_CONSUMABLE);
             startActivityForResult(mIntent, 101);
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             // TODO: 2/13/2016   For check perpose
             Intent mIntent=new Intent(MainActivity.this, VKInAppPurchaseActivity.class);
-            mIntent.putExtra(VKInAppConstants.INAPP_SKU_ID, ASSkuIds.SKU_INAPP_TEST);
+            mIntent.putExtra(VKInAppConstants.INAPP_SKU_ID, SkuIds.SKU_INAPP_TEST);
             mIntent.putExtra(VKInAppConstants.INAPP_SKU_TYPE,IabHelper.ITEM_TYPE_INAPP);
             mIntent.putExtra(VKInAppConstants.INAPP_PRODUCT_TYPE,VKInAppConstants.INAPP_CONSUMABLE);
             startActivityForResult(mIntent, 101);
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent mIntent=new Intent(MainActivity.this, VKInAppPurchaseActivity.class);
-            mIntent.putExtra(VKInAppConstants.INAPP_SKU_ID, ASSkuIds.SKU_SUBS_ONE_DAY);
+            mIntent.putExtra(VKInAppConstants.INAPP_SKU_ID, SkuIds.SKU_SUBS_ONE_DAY);
             mIntent.putExtra(VKInAppConstants.INAPP_SKU_TYPE,IabHelper.ITEM_TYPE_SUBS);
             mIntent.putExtra(VKInAppConstants.INAPP_PRODUCT_TYPE,0);
             startActivityForResult(mIntent, 101);
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent mIntent=new Intent(MainActivity.this, VKInAppPurchaseActivity.class);
-            mIntent.putExtra(VKInAppConstants.INAPP_SKU_ID, ASSkuIds.SKU_INAPP_UPGRADE);
+            mIntent.putExtra(VKInAppConstants.INAPP_SKU_ID, SkuIds.SKU_INAPP_UPGRADE);
             mIntent.putExtra(VKInAppConstants.INAPP_SKU_TYPE,IabHelper.ITEM_TYPE_SUBS);
             mIntent.putExtra(VKInAppConstants.INAPP_PRODUCT_TYPE,VKInAppConstants.INAPP_NON_CONSUMABLE);
             startActivityForResult(mIntent, 101);
@@ -89,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 int mSkuType=data.getExtras().getInt(VKInAppConstants.INAPP_PRODUCT_TYPE);
 
                 if(data.getExtras().getString(VKInAppConstants.INAPP_PURCHASE_TOKEN)!=null)
-                    Log.e("Purchae Token",data.getExtras().getString(VKInAppConstants.INAPP_PURCHASE_TOKEN));
+                    VKLogger.e("Purchase Token",data.getExtras().getString(VKInAppConstants.INAPP_PURCHASE_TOKEN));
+                // {"productId":"appsinvo_day_sub_test","type":"subs","price":"₹ 10.00","price_amount_micros":10000000,"price_currency_code":"INR","title":"OneDaySubscription (InApp Test)","description":"Testing Purpose"}
                 int value=data.getExtras().getInt("response_code");
-//                {"productId":"appsinvo_day_sub_test","type":"subs","price":"₹ 10.00","price_amount_micros":10000000,"price_currency_code":"INR","title":"OneDaySubscription (InApp Test)","description":"Testing Purpose"}
                 switch (value) {
                     case VKInAppConstants.RESULT_PRODUCT_CONSUME_SUCCESSFULLY:
                         responseAlertDialog("You have successfully consume "+mInapSkuId+" product.");
