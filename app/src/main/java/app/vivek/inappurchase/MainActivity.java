@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import app.vivek.inapppurchaselib.utils.IabHelper;
+import app.vivek.inapppurchaselib.utils.Purchase;
 import app.vivek.inapppurchaselib.v3.VKInAppConstants;
+import app.vivek.inapppurchaselib.v3.VKInAppProperties;
 import app.vivek.inapppurchaselib.v3.VKInAppPurchaseActivity;
 import app.vivek.inapppurchaselib.v3.VKLogger;
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_consumable_test).setOnClickListener(onConsumableTestProduct);
         findViewById(R.id.btn_subscription_real).setOnClickListener(onSubscriptionRealProduct);
         findViewById(R.id.btn_non_consumable_real).setOnClickListener(onNonConsumeableRealProduct);
+
+        VKInAppProperties.BASE_64_KEY="";
 
     }
 
@@ -83,12 +87,15 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
             if(requestCode==101){
-                String mInapSkuType=data.getExtras().getString(VKInAppConstants.INAPP_SKU_TYPE);
                 String mInapSkuId=data.getExtras().getString(VKInAppConstants.INAPP_SKU_ID);
-                int mSkuType=data.getExtras().getInt(VKInAppConstants.INAPP_PRODUCT_TYPE);
-
                 if(data.getExtras().getString(VKInAppConstants.INAPP_PURCHASE_TOKEN)!=null)
                     VKLogger.e("Purchase Token",data.getExtras().getString(VKInAppConstants.INAPP_PURCHASE_TOKEN));
+                Purchase purchaseReceipt;
+                if(data.getExtras().containsKey(VKInAppConstants.INAPP_PURCHASE_INFO)){
+                    purchaseReceipt= (Purchase) data.getExtras().getSerializable(VKInAppConstants.INAPP_PURCHASE_INFO);
+                    VKLogger.e("OrderId:- "+purchaseReceipt.getOrderId()+"\n Token:-"+purchaseReceipt.getToken());
+                }
+
                 // {"productId":"appsinvo_day_sub_test","type":"subs","price":"₹ 10.00","price_amount_micros":10000000,"price_currency_code":"INR","title":"OneDaySubscription (InApp Test)","description":"Testing Purpose"}
                 int value=data.getExtras().getInt("response_code");
                 switch (value) {
@@ -96,11 +103,9 @@ public class MainActivity extends AppCompatActivity {
                         responseAlertDialog("You have successfully consume "+mInapSkuId+" product.");
                         break;
                     case VKInAppConstants.RESULT_PRODUCT_PURCHASE_CONSUME_SUCCESSFULLY:
-
                         responseAlertDialog("You have successfully purchase "+mInapSkuId+" product.");
                         break;
                     case VKInAppConstants.RESULT_PROPUR_SUCC_CONSUME_FAIL:
-                        //// TODO: 2/12/2016 fail message
                         responseAlertDialog("You have failed to consume "+mInapSkuId+" product.");
                         break;
                     case VKInAppConstants.RESULT_SUBS_CONTINUE:
@@ -144,8 +149,6 @@ public class MainActivity extends AppCompatActivity {
         bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-                // TODO Auto-generated method stub
-
             }
         });
         bld.create().show();

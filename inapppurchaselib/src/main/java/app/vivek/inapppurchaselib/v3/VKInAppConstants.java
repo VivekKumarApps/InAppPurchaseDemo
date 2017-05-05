@@ -74,6 +74,10 @@ public class VKInAppConstants {
 	 */
 	public static final String INAPP_PURCHASE_TOKEN="PRODUCT_TOKEN";
 
+	/**
+	 * Constant for Purchase token after purchase the product.
+	 */
+	public static final String INAPP_PURCHASE_INFO="PRODUCT_INFO";
 
 	/**
 	 * Constant 0 for Consumable InApp Product Item.

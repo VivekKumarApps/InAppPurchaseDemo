@@ -98,11 +98,10 @@ public class VKInAppPurchaseActivity extends Activity implements IabHelper.OnIab
 				Purchase skuPurchase = inventory.getPurchase(mSkuId);
 				if (skuPurchase != null && verifyDeveloperPayload(skuPurchase)) {
 					// You have purchase this mSkuId but you did not consume it, if you need to purchase this item(mSkuId) for this you need to consume first after that you will purchase again.
-					VKLogger.writeLogInSdcard(true,"\n\n\n\n  Product Which are not consume before:- \n"+ mSkuId+"\n\n skuSubsPurchase:- "+skuPurchase);
 					mHelper.consumeAsync(inventory.getPurchase(mSkuId), VKInAppPurchaseActivity.this);
 					return;
 				}else{
-					//Go For Purchase 
+					//Go For Purchase
 					mHelper.launchPurchaseFlow(this, mSkuId, RC_REQUEST,
 							VKInAppPurchaseActivity.this, payload);
 				}
@@ -116,12 +115,11 @@ public class VKInAppPurchaseActivity extends Activity implements IabHelper.OnIab
 				 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
 				 *        an empty string, but on a production app you should carefully generate this. */
 				Purchase skuSubsPurchase = inventory.getPurchase(mSkuId);
-				VKLogger.writeLogInSdcard(true,"\n\n\n\n  skuSubsPurchase:- \n"+ mSkuId+"\n\n skuSubsPurchase:- "+skuSubsPurchase);
 				if (skuSubsPurchase != null && verifyDeveloperPayload(skuSubsPurchase)) {
-					//TODO Return back to activity for 
-					setupResult(VKInAppConstants.RESULT_SUBS_CONTINUE);
+					//TODO Return back to activity for
+					setupResult(VKInAppConstants.RESULT_SUBS_CONTINUE,skuSubsPurchase);
 				}else{
-					//Go For Purchase 
+					//Go For Purchase
 					mHelper.launchPurchaseFlow(this,
 							mSkuId, IabHelper.ITEM_TYPE_SUBS,
 							RC_REQUEST, VKInAppPurchaseActivity.this, payload);
@@ -148,6 +146,26 @@ public class VKInAppPurchaseActivity extends Activity implements IabHelper.OnIab
 		finish();
 	}
 
+
+
+	/**
+	 /**
+	 * Method is used for sending the status of the inapp purchase to caller activity
+	 * @param type
+	 */
+	private void setupResult(final int type,Purchase token){
+		Intent mIntent=new Intent();
+		Bundle mBundle=new Bundle();
+		mBundle.putInt("response_code", type);
+		mBundle.putString(VKInAppConstants.INAPP_SKU_ID, mSkuId);
+		mBundle.putString(VKInAppConstants.INAPP_SKU_TYPE,mInAppSKUType);
+		mBundle.putInt(VKInAppConstants.INAPP_PRODUCT_TYPE, mSkuType);
+		mBundle.putSerializable(VKInAppConstants.INAPP_PURCHASE_INFO, token);
+
+		mIntent.putExtras(mBundle);
+		setResult(RESULT_OK,mIntent);
+		finish();
+	}
 
 	/**
 	 /**
@@ -191,7 +209,7 @@ public class VKInAppPurchaseActivity extends Activity implements IabHelper.OnIab
 	 * Using your own server to store and verify developer payloads across app
 	 * installations is recommended.
 	 * @param p
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private boolean verifyDeveloperPayload(Purchase p) {
 		String payload = p.getDeveloperPayload();
@@ -204,7 +222,6 @@ public class VKInAppPurchaseActivity extends Activity implements IabHelper.OnIab
 	@Override
 	public void onConsumeFinished(Purchase purchase, IabResult result) {
 		VKLogger.error("Consumption finished. Purchase: " + purchase + ", result: " + result);
-		VKLogger.writeLogInSdcard(true,"\n\n\n\n onConsumeFinished:- \n"+ result.toString()+"\n\n Purchase:- "+purchase);
 		// if we were disposed of in the meantime, quit.
 		if (mHelper == null) return;
 
@@ -213,9 +230,9 @@ public class VKInAppPurchaseActivity extends Activity implements IabHelper.OnIab
 			VKLogger.info("Consumption successful. Provisioning.");
 			//TODO Send the callback for calling activity/fragment
 			if(mPurchaseStatus==0){
-				setupResult(VKInAppConstants.RESULT_PRODUCT_CONSUME_SUCCESSFULLY);
+				setupResult(VKInAppConstants.RESULT_PRODUCT_CONSUME_SUCCESSFULLY,purchase);
 			}else{
-				setupResult(VKInAppConstants.RESULT_PRODUCT_PURCHASE_CONSUME_SUCCESSFULLY);
+				setupResult(VKInAppConstants.RESULT_PRODUCT_PURCHASE_CONSUME_SUCCESSFULLY,purchase);
 			}
 
 
@@ -234,7 +251,6 @@ public class VKInAppPurchaseActivity extends Activity implements IabHelper.OnIab
 	@Override
 	public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
 		VKLogger.info("Purchase finished: " + result + ", purchase: " + purchase);
-		VKLogger.writeLogInSdcard(true,"OnIabPurchaseFinish:- \n"+ result.toString()+"\n\n Purchase:- "+purchase);
 		// if we were disposed of in the meantime, quit.
 		if (mHelper == null) return;
 
@@ -249,7 +265,6 @@ public class VKInAppPurchaseActivity extends Activity implements IabHelper.OnIab
 
 		VKLogger.info("Purchase successful.");
 		if(purchase.getItemType().equalsIgnoreCase(IabHelper.ITEM_TYPE_INAPP)){
-
 			if(mSkuType==0){
 				mPurchaseStatus++;
 				mHelper.consumeAsync(purchase, VKInAppPurchaseActivity.this);
@@ -269,7 +284,7 @@ public class VKInAppPurchaseActivity extends Activity implements IabHelper.OnIab
 			setResult(RESULT_OK,mIntent);
 			finish();*/
 		}else{  //TODO Subs Item Purchased
-			setupResult(VKInAppConstants.RESULT_SUBS_CONTINUE,purchase.getToken());
+			setupResult(VKInAppConstants.RESULT_SUBS_CONTINUE,purchase);
 		}
 
 	}
