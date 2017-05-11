@@ -6,7 +6,13 @@ InAppPurchase Library is an android in-app purchase library though with, we can 
 
 Steps:-
 
-* Put your google play key (Base 64 InApp key) in the VKInAppProperties.java (app.vivek.inapppurchaselib.v3).
+* Put your google play key (Base 64 InApp key) in the VKInAppProperties.java.
+```
+#!java
+
+VKInAppProperties.BASE_64_KEY="Your Base 64 Key";
+
+```
 
 * Open the google play developer console and move to in-app product options and create the inapp product id(for inapp product or subscription).
 

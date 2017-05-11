@@ -1,14 +1,25 @@
 apply plugin: 'com.android.application'
+apply plugin : 'com.github.triplet.play'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
+    playAccountConfigs {
+        defaultAccountConfig {
+            serviceAccountEmail = 'krish1988k@gmail.com'
+            pk12File = file('inapppurchase_service.p12')
+        }
+    }
+
     defaultConfig {
         applicationId "app.vivek.inappurchase"
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
+        playAccountConfig = playAccountConfigs.defaultAccountConfig
     }
     buildTypes {
         release {
@@ -23,3 +34,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile project(':inapppurchaselib')
 }
+
+//afterEvaluate {
+//    def generateReleasePlayResources = tasks.getByName("generateReleasePlayResources")
+//    generateReleasePlayResources.dependsOn loadStoreListingFromRemote
+//}

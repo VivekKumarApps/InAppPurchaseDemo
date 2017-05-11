@@ -1,5 +1,6 @@
 package app.vivek.inappurchase;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +15,7 @@ import app.vivek.inapppurchaselib.v3.VKInAppProperties;
 import app.vivek.inapppurchaselib.v3.VKInAppPurchaseActivity;
 import app.vivek.inapppurchaselib.v3.VKLogger;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
